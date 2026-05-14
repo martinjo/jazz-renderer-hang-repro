@@ -1,0 +1,33 @@
+services:
+  # Minimal Jazz sync server for this reproduction. Same image / command
+  # pattern as the upstream getting-started — `jazz-tools server` is the
+  # public CLI shipped with jazz-tools. Single-app: the server only knows
+  # about the appId it was started with.
+  jazz-server:
+    image: node:20-alpine
+    container_name: jazz-renderer-hang-repro-server
+    restart: unless-stopped
+    ports:
+      - "1626:1625"
+    volumes:
+      - ./data/jazz-server:/data
+    working_dir: /data
+    # Install jazz-tools globally on first start (cached layer-less for
+    # simplicity; if you want a faster boot, switch to building from a
+    # Dockerfile that pre-installs it).
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        set -e
+        if ! command -v jazz-tools >/dev/null; then
+          npm install -g --no-audit --no-fund jazz-tools@2.0.0-alpha.46
+        fi
+        exec jazz-tools server \
+          "$$JAZZ_APP_ID" \
+          --port=1625 \
+          --data-dir=/data \
+          --admin-secret="$$JAZZ_ADMIN_SECRET"
+    environment:
+      # docker-compose substitutes from .env in the same directory.
+      JAZZ_APP_ID: ${PUBLIC_JAZZ_APP_ID:?PUBLIC_JAZZ_APP_ID required}
+      JAZZ_ADMIN_SECRET: ${JAZZ_ADMIN_SECRET:?JAZZ_ADMIN_SECRET required}

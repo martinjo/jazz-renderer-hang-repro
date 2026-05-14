@@ -1,0 +1,18 @@
+node_modules
+/.svelte-kit
+/build
+
+# Local Jazz server data (docker volume mount)
+/data
+
+# OS
+.DS_Store
+
+# Env (real .env is ignored; .env.example is committed with throwaway values)
+.env
+.env.*
+!.env.example
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
