@@ -10,8 +10,7 @@
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"jazz:deploy": "jazz-tools deploy --schema-dir src/lib/models",
-		"jazz:permissions:status": "jazz-tools permissions status --schema-dir src/lib/models",
-		"reset": "docker compose down && docker compose up -d --wait"
+		"jazz:permissions:status": "jazz-tools permissions status --schema-dir src/lib/models"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^6.0.0",
