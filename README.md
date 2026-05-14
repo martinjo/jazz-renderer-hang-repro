@@ -63,8 +63,8 @@ On first `pnpm dev` you should see:
 
 For statistical confidence: repeat **10 times** with a fresh incognito
 window each trial. Observed hang rate when the original bug was bisected:
-10/10 in this minimum configuration, 8/10 in the larger SvelteKit app
-this was extracted from (workarounds in that app do not eliminate it).
+10/10 in this minimum configuration, 8/10 in the larger PlanTogether
+application (workarounds in that app do not eliminate it).
 
 ### Control: the `/jazz-free` route
 
