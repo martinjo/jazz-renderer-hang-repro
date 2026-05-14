@@ -66,6 +66,20 @@ window each trial. Observed hang rate when the original bug was bisected:
 10/10 in this minimum configuration, 8/10 in the larger SvelteKit app
 this was extracted from (workarounds in that app do not eliminate it).
 
+### If the hang stops triggering
+
+The hang is most reliable against a sync server with **no accumulated
+state**. After many trials the local server builds up subscription /
+session state and the hang becomes intermittent or stops triggering.
+Reset the server between batches of trials:
+
+```bash
+pnpm reset
+```
+
+That cycles the docker container and wipes its data directory. Resume
+the trial protocol after the server is back up.
+
 ### Control: the `/jazz-free` route
 
 `/jazz-free` is intentionally **not** wrapped in `JazzSvelteProvider`
