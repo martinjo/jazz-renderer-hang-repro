@@ -33,7 +33,7 @@ cd jazz-renderer-hang-repro
 
 cp .env.example .env            # throwaway appId + admin secret pre-filled
 
-docker compose up -d            # starts a single-app Jazz server on :1626
+docker compose up -d --wait     # starts a single-app Jazz server on :1626
                                 # using the appId + admin secret from .env
 
 pnpm install
@@ -49,6 +49,22 @@ On first `pnpm dev` you should see:
   VITE v6.x  ready in ...
   ➜  Local: http://localhost:5173/
 ```
+
+### Resetting between trials
+
+The container is intentionally **ephemeral** (no host volume mount on
+`/data`), so `docker compose down && docker compose up -d` gives a
+brand-new sync server every time. The hang reproduces most reliably
+against a fresh server — after many trials the wasm-side teardown that
+causes the crash becomes harder to trigger.
+
+If the hang stops triggering, reset everything in one command:
+
+```bash
+pnpm reset
+```
+
+This is just shorthand for the cycle above.
 
 ## How to reproduce
 
